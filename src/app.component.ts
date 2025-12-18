@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CountdownTimerComponent } from './components/countdown.component';
 import { PurchaseFormComponent } from './components/purchase-form.component';
@@ -220,20 +220,52 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
       <!-- Video Section -->
       <section id="video" class="py-20 container mx-auto px-4 lg:px-32">
         <div class="max-w-5xl mx-auto text-center">
-          <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">Veja como faturar em <span class="text-cyan-400">menos de 1 minuto</span></h2>
+          <h2 class="text-3xl md:text-5xl font-black text-white mb-10 leading-tight">
+            Veja como o <span class="text-cyan-400">JABAKULE</span> funciona <br class="hidden md:block"> em menos de 1 minuto
+          </h2>
           
-          <div class="relative aspect-video bg-slate-800 rounded-2xl overflow-hidden border-2 border-cyan-500 shadow-[0_0_30px_rgba(34,211,238,0.3)] group cursor-pointer">
-            <!-- Thumbnail Placeholder -->
-            <div class="absolute inset-0 flex items-center justify-center bg-slate-900/50 group-hover:bg-slate-900/30 transition-all">
-              <div class="w-20 h-20 bg-cyan-500 rounded-full flex items-center justify-center pl-1 shadow-lg transform group-hover:scale-110 transition-transform">
-                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"></path></svg>
+          <div class="relative aspect-video bg-slate-800 rounded-3xl overflow-hidden border-2 border-cyan-500/50 shadow-[0_0_50px_rgba(34,211,238,0.15)] group">
+            <!-- Video Support -->
+            <video 
+              autoplay 
+              muted 
+              loop 
+              playsinline
+              preload="auto"
+              class="w-full h-full object-cover"
+              src="assets/video/vsl-demonstracao.mp4">
+            </video>
+
+            <!-- Gradient Overlays for aesthetics -->
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/40 to-transparent pointer-events-none"></div>
+            
+            <!-- Fake Progress Bar -->
+            <div class="absolute bottom-0 left-0 w-full h-1.5 bg-slate-950/60 backdrop-blur-sm">
+              <div 
+                class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all duration-1000 ease-linear"
+                [style.width.%]="fakeProgress()">
               </div>
             </div>
-            <img src="https://picsum.photos/seed/tech/1280/720" width="1280" height="720" alt="Video Thumbnail" class="w-full h-full object-cover opacity-50 mix-blend-overlay">
-            
-            <!-- Decoration -->
-            <div class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded animate-pulse">LIVE DEMO</div>
+
+            <!-- Custom Labels -->
+            <div class="absolute top-6 left-6 flex items-center gap-3 bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+              <div class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+              </div>
+              <span class="text-[10px] md:text-xs font-black text-white uppercase tracking-[0.2em]">Live Demo</span>
+            </div>
+
+            <div class="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+               <div class="bg-cyan-500/20 backdrop-blur-md border border-cyan-500/50 text-cyan-400 text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest">
+                  Alta Definição 4K
+               </div>
+            </div>
           </div>
+
+          <p class="mt-8 text-slate-400 font-medium">
+            💡 Mais de 1.500 empresas já simplificaram a sua faturação com este sistema.
+          </p>
         </div>
       </section>
 
@@ -331,8 +363,44 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
     </button>
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   isMenuOpen = signal(false);
+  fakeProgress = signal(0);
+  private progressInterval: any;
+  private currentIncrement = 2.5;
+
+  ngOnInit() {
+    this.startFakeProgress();
+  }
+
+  ngOnDestroy() {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+  }
+
+  private startFakeProgress() {
+    // VSL Style: Starts fast, slows down gradually
+    this.progressInterval = setInterval(() => {
+      this.fakeProgress.update(v => {
+        if (v >= 99) {
+          clearInterval(this.progressInterval);
+          return 99;
+        }
+
+        const nextVal = v + this.currentIncrement;
+
+        // As it approaches the end, it slows down significantly
+        if (v > 70) {
+          this.currentIncrement *= 0.95;
+        } else if (v > 40) {
+          this.currentIncrement *= 0.98;
+        }
+
+        return nextVal > 99 ? 99 : nextVal;
+      });
+    }, 1000);
+  }
 
   toggleMenu() {
     this.isMenuOpen.update(v => !v);
