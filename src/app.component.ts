@@ -233,7 +233,10 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
               playsinline
               preload="auto"
               class="w-full h-full object-cover"
-              src="assets/video/vsl-demonstracao.mp4">
+              src="assets/video/vsl-demonstracao.mp4"
+              (playing)="onVideoPlaying()"
+              (pause)="onVideoPaused()"
+              (ended)="onVideoPaused()">
             </video>
 
             <!-- Gradient Overlays for aesthetics -->
@@ -369,8 +372,16 @@ export class AppComponent implements OnInit, OnDestroy {
   private progressInterval: any;
   private currentIncrement = 2.5;
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  onVideoPlaying() {
     this.startFakeProgress();
+  }
+
+  onVideoPaused() {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
   }
 
   ngOnDestroy() {
@@ -380,6 +391,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private startFakeProgress() {
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+
     // VSL Style: Starts fast, slows down gradually
     this.progressInterval = setInterval(() => {
       this.fakeProgress.update(v => {
