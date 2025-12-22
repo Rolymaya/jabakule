@@ -140,6 +140,53 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
           </div>
         </div>
       </section>
+      <!-- Pricing & Promo Section -->
+      <section id="pricing" class="py-20 bg-gradient-to-b from-slate-900 to-blue-900/20">
+        <div class="container mx-auto px-4 lg:px-32">
+          <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
+            
+            <!-- Text Side -->
+            <div class="lg:w-1/2 text-left">
+              <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Promoção Especial de Adaptação à Nova Lei</h2>
+              <p class="text-xl text-slate-300 mb-8">Não deixe para a última hora. Garanta a conformidade do seu negócio hoje com uma oferta irrepetível.</p>
+              
+              <ul class="space-y-4 mb-8">
+                <li class="flex items-center gap-3">
+                  <span class="text-cyan-400 text-xl">✔</span>
+                  <span class="text-white text-lg">Software licenciado AGT</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyan-400 text-xl">✔</span>
+                  <span class="text-white text-lg font-bold bg-cyan-500/10 px-2 py-1 rounded">2 anos de licença (Pague 1, Leve 2)</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyan-400 text-xl">✔</span>
+                  <span class="text-white text-lg">Usuários ilimitados</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyan-400 text-xl">✔</span>
+                  <span class="text-white text-lg">Formação & Suporte Gratuito</span>
+                </li>
+              </ul>
+
+              <div class="inline-block bg-slate-800 rounded-2xl p-6 border border-slate-700">
+                <p class="text-sm text-slate-400 uppercase tracking-widest mb-2">Preço Promocional</p>
+                <div class="flex items-end gap-2">
+                  <span class="text-5xl font-black text-white">46.000 Kz</span>
+                  <span class="text-xl text-slate-400 mb-2">/ 2 anos</span>
+                </div>
+                <p class="text-green-400 text-sm mt-2 font-bold">Poupança imediata de 46.000 Kz</p>
+              </div>
+            </div>
+
+            <!-- Timer Side -->
+            <div class="lg:w-1/2 w-full">
+              <app-countdown></app-countdown>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       <!-- Form Section -->
       <section id="buy" class="py-20 relative">
@@ -285,53 +332,6 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
         </div>
       </section>
 
-      <!-- Pricing & Promo Section -->
-      <section id="pricing" class="py-20 bg-gradient-to-b from-slate-900 to-blue-900/20">
-        <div class="container mx-auto px-4 lg:px-32">
-          <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
-            
-            <!-- Text Side -->
-            <div class="lg:w-1/2 text-left">
-              <h2 class="text-4xl md:text-5xl font-black text-white mb-6">Promoção Especial de Adaptação à Nova Lei</h2>
-              <p class="text-xl text-slate-300 mb-8">Não deixe para a última hora. Garanta a conformidade do seu negócio hoje com uma oferta irrepetível.</p>
-              
-              <ul class="space-y-4 mb-8">
-                <li class="flex items-center gap-3">
-                  <span class="text-cyan-400 text-xl">✔</span>
-                  <span class="text-white text-lg">Software licenciado AGT</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyan-400 text-xl">✔</span>
-                  <span class="text-white text-lg font-bold bg-cyan-500/10 px-2 py-1 rounded">2 anos de licença (Pague 1, Leve 2)</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyan-400 text-xl">✔</span>
-                  <span class="text-white text-lg">Usuários ilimitados</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyan-400 text-xl">✔</span>
-                  <span class="text-white text-lg">Formação & Suporte Gratuito</span>
-                </li>
-              </ul>
-
-              <div class="inline-block bg-slate-800 rounded-2xl p-6 border border-slate-700">
-                <p class="text-sm text-slate-400 uppercase tracking-widest mb-2">Preço Promocional</p>
-                <div class="flex items-end gap-2">
-                  <span class="text-5xl font-black text-white">46.000 Kz</span>
-                  <span class="text-xl text-slate-400 mb-2">/ 2 anos</span>
-                </div>
-                <p class="text-green-400 text-sm mt-2 font-bold">Poupança imediata de 46.000 Kz</p>
-              </div>
-            </div>
-
-            <!-- Timer Side -->
-            <div class="lg:w-1/2 w-full">
-              <app-countdown></app-countdown>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
 
       <!-- Final CTA -->
