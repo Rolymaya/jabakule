@@ -141,6 +141,19 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
         </div>
       </section>
 
+      <!-- Form Section -->
+      <section id="buy" class="py-20 relative">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+        <div class="container mx-auto px-4 lg:px-32 flex flex-col items-center">
+            <h2 class="text-3xl md:text-5xl font-black text-center text-white mb-4">Compre Agora Sua Licença</h2>
+            <p class="text-slate-400 text-center mb-12 max-w-2xl">Preencha o formulário. O processo é rápido e a sua licença é emitida em minutos após confirmação.</p>
+            
+            <div class="w-full max-w-2xl">
+              <app-purchase-form></app-purchase-form>
+            </div>
+        </div>
+      </section>
+
       <!-- Legal Alert Section (Fear) -->
       <section id="legal" class="py-20 relative overflow-hidden">
         <div class="absolute inset-0 bg-red-900/10 skew-y-3 transform origin-bottom-right"></div>
@@ -320,18 +333,6 @@ import { PurchaseFormComponent } from './components/purchase-form.component';
         </div>
       </section>
 
-      <!-- Form Section -->
-      <section id="buy" class="py-20 relative">
-        <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
-        <div class="container mx-auto px-4 lg:px-32 flex flex-col items-center">
-            <h2 class="text-3xl md:text-5xl font-black text-center text-white mb-4">Ative o JABAKULE Agora</h2>
-            <p class="text-slate-400 text-center mb-12 max-w-2xl">Preencha o formulário. O processo é rápido e a sua licença é emitida em minutos após confirmação.</p>
-            
-            <div class="w-full max-w-2xl">
-              <app-purchase-form></app-purchase-form>
-            </div>
-        </div>
-      </section>
 
       <!-- Final CTA -->
       <section class="py-20 bg-cyan-900/20 border-t border-cyan-900/50">

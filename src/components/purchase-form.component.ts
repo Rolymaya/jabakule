@@ -18,7 +18,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
         </div>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-5">
-          <!-- Empresa -->
+            <!-- Empresa -->
           <div>
             <label class="block text-sm font-medium text-slate-300 mb-1">Nome da Empresa</label>
             <input 
@@ -27,9 +27,6 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
               class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder-slate-500"
               placeholder="Ex: Comercial Sucesso, Lda"
             >
-            @if (form.get('companyName')?.touched && form.get('companyName')?.invalid) {
-              <p class="text-red-400 text-xs mt-1">Nome da empresa é obrigatório.</p>
-            }
           </div>
 
           <!-- NIF -->
@@ -41,9 +38,6 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
               class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder-slate-500"
               placeholder="Ex: 5000123456"
             >
-            @if (form.get('nif')?.touched && form.get('nif')?.invalid) {
-              <p class="text-red-400 text-xs mt-1">NIF válido é obrigatório.</p>
-            }
           </div>
 
           <!-- Responsável -->
@@ -55,9 +49,6 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
               class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder-slate-500"
               placeholder="Seu nome completo"
             >
-            @if (form.get('responsibleName')?.touched && form.get('responsibleName')?.invalid) {
-              <p class="text-red-400 text-xs mt-1">Nome do responsável é obrigatório.</p>
-            }
           </div>
 
           <!-- Contatos Grid -->
@@ -70,9 +61,6 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
                 class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder-slate-500"
                 placeholder="9XX XXX XXX"
               >
-               @if (form.get('phone')?.touched && form.get('phone')?.invalid) {
-                <p class="text-red-400 text-xs mt-1">Telefone obrigatório.</p>
-              }
             </div>
             <div>
               <label class="block text-sm font-medium text-slate-300 mb-1">Email <span class="text-slate-500 text-xs font-normal">(Opcional)</span></label>
@@ -82,16 +70,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
                 class="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all placeholder-slate-500"
                 placeholder="email@empresa.com"
               >
-              @if (form.get('email')?.touched && form.get('email')?.invalid) {
-                <p class="text-red-400 text-xs mt-1">Email inválido.</p>
-              }
             </div>
           </div>
 
           <!-- Botão Submit -->
           <button 
             type="submit" 
-            [disabled]="form.invalid || isSubmitting()"
+            [disabled]="isSubmitting()"
             class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.5)] transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-4 text-lg"
           >
             @if (isSubmitting()) {
@@ -120,44 +105,42 @@ export class PurchaseFormComponent {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      companyName: ['', Validators.required],
-      nif: ['', Validators.required],
-      responsibleName: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', [Validators.email]] // Removed Validators.required
+      companyName: [''],
+      nif: [''],
+      responsibleName: [''],
+      phone: [''],
+      email: ['']
     });
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.isSubmitting.set(true);
-      
-      const formValue = this.form.value;
-      const phoneNumber = '244945571528';
-      
-      let message = `Olá, quero ativar a licença JABAKULE (Promoção 2 anos).\n\n`;
+    this.isSubmitting.set(true);
+
+    const formValue = this.form.value;
+    const phoneNumber = '244945571528';
+
+    let message = `Olá, quero ativar a licença JABAKULE (Promoção 2 anos).\n\n`;
+
+    const hasData = formValue.companyName || formValue.nif || formValue.responsibleName || formValue.phone || formValue.email;
+
+    if (hasData) {
       message += `*Dados da Empresa:*\n`;
-      message += `Nome: ${formValue.companyName}\n`;
-      message += `NIF: ${formValue.nif}\n`;
-      message += `Responsável: ${formValue.responsibleName}\n`;
-      message += `Telefone: ${formValue.phone}\n`;
-      
-      if (formValue.email) {
-        message += `Email: ${formValue.email}\n`;
-      }
-
-      const encodedMessage = encodeURIComponent(message);
-      const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-      
-      // Delay slightly to show processing state, then redirect
-      setTimeout(() => {
-        window.open(url, '_blank');
-        this.isSubmitting.set(false);
-        this.form.reset();
-      }, 500);
-
+      if (formValue.companyName) message += `Nome: ${formValue.companyName}\n`;
+      if (formValue.nif) message += `NIF: ${formValue.nif}\n`;
+      if (formValue.responsibleName) message += `Responsável: ${formValue.responsibleName}\n`;
+      if (formValue.phone) message += `Telefone: ${formValue.phone}\n`;
+      if (formValue.email) message += `Email: ${formValue.email}\n`;
     } else {
-      this.form.markAllAsTouched();
+      message += `Gostaria de obter mais informações sobre a licença e como proceder com a ativação.`;
     }
+
+    const encodedMessage = encodeURIComponent(message);
+    const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+    setTimeout(() => {
+      window.open(url, '_blank');
+      this.isSubmitting.set(false);
+      this.form.reset();
+    }, 500);
   }
 }
